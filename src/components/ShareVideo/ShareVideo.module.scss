@@ -1,0 +1,33 @@
+//share video item
+.share-item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 11px 16px;
+    margin: 0px 3px 0px 4px;
+
+    &:hover {
+        background: rgba(22, 24, 35, 0.03);
+        text-decoration: none;
+    }
+}
+
+.share-text {
+    margin-left: 12px;
+}
+
+.share-more {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 0px 16px;
+    position: relative;
+    margin: 0px 4px;
+
+    &:hover {
+        background: rgba(22, 24, 35, 0.03);
+        text-decoration: none;
+    }
+}
