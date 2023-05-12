@@ -22,11 +22,10 @@ import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
 import { Link } from 'react-router-dom';
-import Authen from '~/components/Authen/Authen';
-import { useState } from 'react';
+import { useStore, actions } from '~/store';
+
 
 const cx = classNames.bind(styles);
-const currentUser = false;
 
 const MENU_ITEMS = [
     {
@@ -82,17 +81,33 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
-            to: '/logout',
+            to: '/',
             separate: true,
         },
     ];
 
-    // show modal Authen
-    const [showHideModal, setShowHideModal] = useState(false)
+    // current user
+    const [state, dispatch] = useStore()
 
-    const handleShowModal = () => {
-        setShowHideModal(true)
+    const currentUser = state.currentUser.status
+    // show modal Authen
+
+    const handleShowModal = e => {
+        dispatch(actions.showModal(e))
     }
+
+    // show upload page
+
+    const handleShowUpLoadPage = () => {
+        if (currentUser) {
+            //
+        } else {
+            dispatch(actions.showModal())
+
+        }
+    }
+
+
 
     return (
         <header className={cx('wrapper')}>
@@ -126,9 +141,8 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button text>Upload</Button>
+                            <Button text onClick={handleShowUpLoadPage}>Upload</Button>
                             <Button primary onClick={handleShowModal}>Log in</Button>
-                            <Authen modalAuthen={showHideModal} setModalAuthen={setShowHideModal} />
                         </>
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
@@ -144,6 +158,7 @@ function Header() {
                             </button>
                         )}
                     </Menu>
+
                 </div>
             </div>
         </header>

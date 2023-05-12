@@ -19,6 +19,7 @@ function Button({
     className,
     leftIcon,
     rightIcon,
+    idvideo,
     onClick,
     ...passProps
 }) {
@@ -55,9 +56,9 @@ function Button({
     });
 
     return (
-        <Comp className={classes} {...props}>
+        <Comp className={classes} {...props} idvideo={idvideo}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-            <span className={cx('title')}>{children}</span>
+            <span className={cx('title')} idvideo={idvideo}>{children}</span>
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>
     );

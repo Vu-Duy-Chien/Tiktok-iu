@@ -6,14 +6,28 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import MenuItem from './MenuItem';
 import styles from './Menu.module.scss';
 import Header from './Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useStore, actions } from '~/store';
+
 
 const cx = classNames.bind(styles);
-const defaultFn = () => {};
+const defaultFn = () => { };
 
 function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn }) {
     const [history, setHistory] = useState([{ data: items }]);
     const current = history[history.length - 1];
+    const [state, dispatch] = useStore()
+
+    const currentUser = state.currentUser.status
+    useEffect(() => {
+        setHistory([{ data: items }])
+    }, [currentUser])
+
+    const handleLogout = e => {
+        if (e.target.innerText === 'Log out') {
+            dispatch(actions.logoutSuccess())
+        }
+    }
 
     const renderItems = () => {
         return current.data.map((item, index) => {
@@ -23,12 +37,13 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                 <MenuItem
                     key={index}
                     data={item}
-                    onClick={() => {
+                    onClick={e => {
                         if (isParent) {
                             setHistory((prev) => [...prev, item.children]);
                         } else {
                             onChange(item);
                         }
+                        handleLogout(e)
                     }}
                 />
             );

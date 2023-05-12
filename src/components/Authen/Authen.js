@@ -5,10 +5,14 @@ import { faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 import { useEffect, useRef, useState } from "react";
+import { useStore, actions } from '~/store';
+
 
 const cx = classNames.bind(styles)
 
-function Authen({ modalAuthen, setModalAuthen }) {
+function Authen() {
+    const [state, dispatch] = useStore()
+    const { authen } = state
 
     const [usernameValue, setUsernameValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
@@ -16,24 +20,26 @@ function Authen({ modalAuthen, setModalAuthen }) {
     const [signupOrLogin, setSignupOrLogin] = useState(true)
     const [disabledButton, setDisableButton] = useState(true)
     const [enterText, setEnterText] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(false)
 
     const modalRef = useRef()
     const passwordRef = useRef()
     const contentContainer = useRef()
 
     const handleHidenModal = () => {
-        setModalAuthen(false)
+        dispatch(actions.hideModal())
+        setSignupOrLogin(true)
     }
 
     useEffect(() => {
-        if (modalAuthen && modalRef.current) {
+        if (authen && modalRef.current) {
             modalRef.current.classList.add(cx('show-modal'))
             contentContainer.current.classList.add(cx('content-container-show'))
         } else {
             modalRef.current.classList.remove(cx('show-modal'))
             contentContainer.current.classList.remove(cx('content-container-show'))
         }
-    }, [modalAuthen])
+    }, [authen])
 
 
     const handleGetUsername = e => {
@@ -68,13 +74,80 @@ function Authen({ modalAuthen, setModalAuthen }) {
 
     const handleSignupOrLogin = () => {
         setSignupOrLogin(!signupOrLogin)
+        setUsernameValue('')
+        setPasswordValue('')
+        setDisableButton(true)
     }
+
 
     const handleLogin = e => {
         e.preventDefault()
 
         //logic
-        console.log(e);
+        if (!state.currentUser.status) {
+            // signupOrLogin = false đang ở form đăng ký
+            if (!signupOrLogin) {
+                const listUsers = localStorage.getItem("listUsers");
+                if (listUsers) {
+                    let listUsersLocal = JSON.parse(listUsers)
+
+                    if (!listUsersLocal.some(user => (user.username === usernameValue))) {
+                        const lastID = listUsersLocal[listUsersLocal.length - 1].id
+                        const newID = parseInt(lastID) + 1
+                        listUsersLocal = [...listUsersLocal, {
+                            id: newID,
+                            username: usernameValue,
+                            password: passwordValue,
+                            follow: [],
+                            liked: []
+                        }]
+                        listUsersLocal = JSON.stringify(listUsersLocal)
+                        localStorage.setItem("listUsers", listUsersLocal);
+                        setErrorMessage(false)
+                        alert('Sign Up Success')
+                        setSignupOrLogin(true)
+                        setDisableButton(true)
+
+                    } else {
+                        setErrorMessage(true)
+                    }
+                } else {
+                    localStorage.setItem("listUsers", `
+                   [
+                    { "id":1,
+                    "username":"${usernameValue}",
+                    "password":"${passwordValue}",
+                    "follow":[],
+                    "liked":[]}
+                ]
+                    `);
+                    setErrorMessage(false)
+                    alert('Sign Up Success')
+                    setSignupOrLogin(true)
+                    setDisableButton(true)
+                }
+            } else if (signupOrLogin) {
+                // signupOrLogin = true đang ở form đăng nhập
+                const listUsers = localStorage.getItem("listUsers");
+                if (listUsers && listUsers.length > 0) {
+                    const listUsersLocal = JSON.parse(listUsers)
+                    const checkAccount = listUsersLocal.some(user => (user.username === usernameValue) && (user.password === passwordValue))
+                    if (checkAccount) {
+                        const [dataUser] = listUsersLocal.filter(user => user.username === usernameValue)
+
+                        dispatch(actions.loginSuccess(dataUser))
+                        dispatch(actions.hideModal())
+                        setDisableButton(true)
+
+                    } else {
+
+                        alert('incorrect account')
+                        setDisableButton(true)
+                    }
+                }
+            }
+
+        }
 
 
 
@@ -105,6 +178,8 @@ function Authen({ modalAuthen, setModalAuthen }) {
 
                                 </div>
                             </div>
+                            {errorMessage && <p className={cx('error-message')}>The account is already in use</p>}
+
                             <Link to={'/'} className={cx('link-text')}>Forgot password?</Link>
                             <Button onClick={handleLogin} disabled={disabledButton} type="submit" className={cx('login-btn')}>{signupOrLogin ? 'Log in' : 'Sign up'}</Button>
                         </form>

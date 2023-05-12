@@ -1,7 +1,8 @@
 .wrapper {
-    width: 356px;
+    width: 240px;
     padding: 20px 0 26px 8px;
     margin-left: -18px;
+    z-index: 9;
 }
 
 .sidebar-place {
@@ -24,5 +25,8 @@
         flex: 0 0 72px;
         border-right: 1px solid rgba(22, 24, 35, 0.12);
         box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px;
+    }
+    .wrapper {
+        width: 72px;
     }
 }

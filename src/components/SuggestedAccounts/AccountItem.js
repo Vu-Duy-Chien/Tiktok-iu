@@ -6,18 +6,18 @@ import styles from './SuggestedAccounts.module.scss';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ onMouseenter = () => { }, data }) {
+function AccountItem({ onMouseenter = () => { }, data, onMouseleave = () => { } }) {
 
 
     return (
 
-        <div className={cx('account-item')} onMouseEnter={onMouseenter}>
+        <div className={cx('account-item')} onMouseLeave={onMouseleave} onMouseEnter={onMouseenter} iduser={data.id}>
             <img
                 className={cx('avatar')}
                 src={data.avatar}
                 alt={data.nickName}
             />
-            <div className={cx('item-info')}>
+            <div className={cx('item-info')} iduser={data.id}>
                 <p className={cx('nickname')}>
                     <span className={cx('nickname-text')}>{data.nickName}</span>
 

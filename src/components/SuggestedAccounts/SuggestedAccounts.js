@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function SuggestedAccounts({ label, onMouseenter, data }) {
+function SuggestedAccounts({ label, onMouseenter, data, onMouseleave }) {
 
 
     const [allAccount, setAllAccount] = useState(data)
@@ -33,7 +33,7 @@ function SuggestedAccounts({ label, onMouseenter, data }) {
             {
                 renderAccount.map((account) => (
 
-                    <AccountItem onMouseenter={onMouseenter} data={account} key={account.id} />
+                    <AccountItem onMouseleave={onMouseleave} onMouseenter={onMouseenter} data={account} key={account.id} />
 
                 ))
             }

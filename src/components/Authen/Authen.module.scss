@@ -72,6 +72,7 @@
 .login-scroll {
     overflow: auto;
     flex: 1 1 0%;
+    overscroll-behavior-y: contain;
 }
 
 .login-container {
@@ -155,6 +156,10 @@
     padding: 0 16px;
     color: #83848b;
     cursor: pointer;
+}
+
+.error-message {
+    color: red;
 }
 
 .login-btn {

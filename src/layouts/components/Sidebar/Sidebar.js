@@ -11,6 +11,10 @@ import {
 } from '~/components/Icons';
 import config from '~/config';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
+import AccountPreview from '~/components/SuggestedAccounts/AccountPreview/AccountPreview';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '~/hooks';
+
 
 const cx = classNames.bind(styles);
 
@@ -109,12 +113,46 @@ const dataAccountSuggested = [
 ]
 
 function Sidebar() {
+    const [userPreview, setUserPreview] = useState()
+    const [showhide, setShowhide] = useState(false)
+    const [style, setStyle] = useState()
+    const [preview, setPreview] = useState(false)
+    const [userID, setUserID] = useState('')
+    const [keepUserID, setKeepUserID] = useState('')
+    const [event, setEvent] = useState()
+    const deBouncedValue = useDebounce(userID, 200);
 
-    const handlePreview = e => {
-        if (e.target.tagName === 'DIV') {
-            console.log(e.timeStamp)
+    const handleShowPreview = e => {
+        setPreview(true)
+
+        if (e.target.tagName === 'DIV' && e.target.getAttribute("iduser")) {
+            setEvent(e)
+            setUserID(e.target.getAttribute("iduser"))
+            setKeepUserID(e.target.getAttribute("iduser"))
+        } else {
+            setUserID(null)
         }
     }
+
+
+    const handleHidePrieview = e => {
+        setPreview(false)
+        setUserID(false)
+    }
+
+    useEffect(() => {
+        if (preview) {
+            const [data] = dataAccountSuggested.filter(user => user.id == keepUserID)
+            setUserPreview(data)
+            setShowhide(true)
+            if (event.pageY) {
+                setStyle(event.pageY)
+            }
+        } else {
+            setShowhide(false)
+        }
+    }, [deBouncedValue]);
+
 
     return (
         <aside className={cx('wrapper')}>
@@ -129,8 +167,9 @@ function Sidebar() {
                     />
                     <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon />} activeIcon={<LiveActiveIcon />} />
                 </Menu>
-                <SuggestedAccounts label="Suggested accounts" onMouseenter={handlePreview} data={dataAccountSuggested} />
+                <SuggestedAccounts label="Suggested accounts" onMouseleave={handleHidePrieview} onMouseenter={handleShowPreview} data={dataAccountSuggested} />
             </div>
+            {showhide && <AccountPreview data={userPreview} style={style} onMouseenter={handleShowPreview} onMouseleave={handleHidePrieview} />}
         </aside>
     );
 }

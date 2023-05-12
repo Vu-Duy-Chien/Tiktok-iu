@@ -33,7 +33,6 @@ const dataVideos = [
         description: "I FOUND OIL!",
         tagTopic: "#freedom",
         musicLink: "original sound - Slavik",
-        liked: true,
 
         user: {
             name: "Slavik",
@@ -50,7 +49,6 @@ const dataVideos = [
         description: "Với phụ kiện này chúng có thể bay lên cao",
         tagTopic: "#aquascaping",
         musicLink: "Luv Letters - frad",
-        liked: false,
         user: {
             name: "aquascaping",
             nickName: "aquascaping",
@@ -66,7 +64,6 @@ const dataVideos = [
         description: "Nuôi cho tốn cơm 😂",
         tagTopic: "#animalsoftiktok",
         musicLink: "nhạc nền - Petfunny",
-        liked: false,
 
         user: {
             name: "Petfunny",
@@ -83,7 +80,6 @@ const dataVideos = [
         description: "Ae thấy sao 🤔",
         tagTopic: "#sportbike",
         musicLink: "nhạc nền - Tien Dat ( TD )",
-        liked: true,
         user: {
             name: "VThang ✨",
             nickName: "thanden36",
@@ -99,7 +95,6 @@ const dataVideos = [
         description: "Hệ điều hành thập cẩm 🤣",
         tagTopic: "#xuhuong",
         musicLink: "nhạc nền - Đà Lạt +",
-        liked: false,
         user: {
             name: "𝑷𝒉𝒆𝒂𝒑 𝑴𝒂𝒌𝒆 𝑴𝒆𝒎𝒆",
             nickName: "pheap_meme",
@@ -115,7 +110,6 @@ const dataVideos = [
         description: "Đánh không được thì ta chạy",
         tagTopic: "#hàihướcvuivẻ",
         musicLink: "nhạc nền - Vui Kênh TV - có thể -bạn- chưa biết",
-        liked: false,
         user: {
             name: "có thể -bạn- chưa biết",
             nickName: "cothebanchuabiethh",
@@ -131,7 +125,6 @@ const dataVideos = [
         description: "",
         tagTopic: "#funnyvideo",
         musicLink: "оригинальный звук - Мешапчики",
-        liked: false,
         user: {
             name: "Mememi",
             nickName: "funny.noa",
@@ -147,7 +140,6 @@ const dataVideos = [
         description: "Hiện tượng thú vị đánh lừa bộ não của chúng ta",
         tagTopic: "#thinhhanh",
         musicLink: "nhạc nền - L-E-O 👑",
-        liked: false,
         user: {
             name: "L-E-O 👑",
             nickName: "l.e.o_bg",
@@ -163,7 +155,6 @@ const dataVideos = [
         description: "mới lên màu ,đẹp ko ae",
         tagTopic: "",
         musicLink: "WESTSIDE SQUAD - SinKra Remix - Jombie & Dế Choắt & Endless",
-        liked: false,
         user: {
             name: "Mi Trần 🐰",
             nickName: "1510_mie",
@@ -179,7 +170,6 @@ const dataVideos = [
         description: "",
         tagTopic: "#capcut",
         musicLink: "nhạc nền - iu tiktok nhìu🍇",
-        liked: false,
         user: {
             name: "iu tiktok nhìu🍇",
             nickName: "embexinh.207",
@@ -212,13 +202,23 @@ function Home() {
 
     return (
         <div className={cx('wrapper')}>
-            {dataVideos.map(item => (
-                <Video key={item.id} data={item} onchange={handleInputChange} volumeValue={volumeValue}
-                    setVolume={setVolumeValue}
-                    setOldVolume={setOldVolume}
-                    oldVolume={oldVolume}
-                />
-            ))}
+            {dataVideos.map(item => {
+                if (item.id == 1) {
+                    return <Video key={item.id} idvideo="firstVideo" data={item} onchange={handleInputChange} volumeValue={volumeValue}
+                        setVolume={setVolumeValue}
+                        setOldVolume={setOldVolume}
+                        oldVolume={oldVolume}
+                    />
+                } else {
+                    return <Video key={item.id} data={item} onchange={handleInputChange} volumeValue={volumeValue}
+                        setVolume={setVolumeValue}
+                        setOldVolume={setOldVolume}
+                        oldVolume={oldVolume}
+                    />
+                }
+
+            }
+            )}
 
         </div>
     );
