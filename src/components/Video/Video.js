@@ -17,9 +17,12 @@ const cx = classNames.bind(styles)
 
 
 function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume, idvideo }) {
+
+
     const [hideListShare, setHideListShare] = useState(true)
     const [like, setLike] = useState()
     const [follow, setFollow] = useState()
+
 
 
     const renderResult = (attrs) => <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
@@ -30,28 +33,36 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
 
 
     // Verify login status
+
     const [state, dispatch] = useStore()
     const currentUser = state.currentUser
 
 
-
     useEffect(() => {
 
-        const checkID = currentUser.follow.some(item => item == data.id)
+        const checkFollow = currentUser.follow.some(item => item == data.id)
+        const checkLike = currentUser.liked.some(item => item == data.id)
 
-        if (checkID) {
+
+        if (checkFollow) {
             setFollow(false)
-            setLike(false)
         } else {
             setFollow(true)
-            setLike(true)
-
         }
+        if (checkLike) {
+            setLike(false)
+        } else {
+            setLike(true)
+        }
+
+
+
     }, [currentUser.id])
 
 
     //liked
     const handleActiveLike = e => {
+
         if (currentUser.status) {
             let idvideo = ''
             if (e.target.tagName === 'path') {
@@ -79,8 +90,7 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
                 newData = [...newData, newUser]
                 localStorage.setItem("listUsers", JSON.stringify(newData))
             }
-            dispatch(actions.updateFollow(newUser.liked))
-
+            dispatch(actions.updateLiked(newUser.liked))
             setLike(!like)
         } else {
             dispatch(actions.showModal())
@@ -112,8 +122,9 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
                 newData = [...newData, newUser]
                 localStorage.setItem("listUsers", JSON.stringify(newData))
             }
-            dispatch(actions.updateLiked(newUser.follow))
+            dispatch(actions.updateFollow(newUser.follow))
             setFollow(!follow)
+
         } else {
             dispatch(actions.showModal())
         }
@@ -128,6 +139,28 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
         }
     }
 
+    // tippy render profile
+
+    const renderProfile = (attrs) => <div className={cx('profileContainer')} tabIndex="-1" {...attrs}>
+        <PopperWrapper className={cx('profileInner')}>
+            <div className={cx('profile-header')}>
+                <img className={cx('profile-avatar')} src={data.user.avatar} alt="" />
+                <Button className={cx('follow-btn', 'follow-big', { 'follow-active': !follow })} idvideo={data.id} outline small onClick={handleFollow} >
+                    {follow ? 'Follow' : 'Following'}
+                </Button>
+            </div>
+            <h3 className={cx('nickname')}>{data.user.nickName} </h3>
+            <h4 className={cx('profile-name')}>{data.user.name}</h4>
+            <p className={cx('follow-like')}>
+                <span className={cx('number')}>15678</span>
+                <span className={cx('profile-text')}>Followers</span>
+                <span className={cx('number')}>25.4k</span>
+                <span>likes</span>
+            </p>
+            <p className={cx('profile-bio')}>Chào mọi người🥰</p>
+        </PopperWrapper>
+    </div>
+
     return <div className={cx('item-container')} key={data.id} id={idvideo}>
         <img
             className={cx('avatar')}
@@ -135,14 +168,23 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
         />
         <div className={cx('Content')}>
             <div className={cx('TextInfo')}>
-                <div className={cx('Author')}>
-                    <h3 className={cx('nickname')}>{data.user.nickName} </h3>
-                    <h4 className={cx('name')}>{data.user.name}</h4>
-                </div>
-                <Button className={cx('follow-btn')} idvideo={data.id} outline small onClick={handleFollow}>
+                <Tippy
+                    zIndex={"9"}
+                    interactive
+                    placement="top-start"
+                    delay={[700, 0]}
+                    offset={[-65, 30]}
+                    render={renderProfile}
+                >
+                    <div className={cx('Author')}>
+                        <h3 className={cx('nickname')}>{data.user.nickName} </h3>
+                        <h4 className={cx('name')}>{data.user.name}</h4>
+                    </div>
+                </Tippy>
+                <Button className={cx('follow-btn', 'follow-small', { 'follow-active': !follow })} idvideo={data.id} outline small onClick={handleFollow}>
                     {follow ? 'Follow' : 'Following'}
                 </Button>
-                <div className={cx('description')}>{data.description} <Link to='/'>{data.tagTopic}</Link> </div>
+                <div className={cx('description')}>{data.description} <Link to='/' className={cx('common-link')}>{data.tagTopic}</Link> </div>
                 <h4 className={cx('music')}>
                     <Link to={'/'}>
                         <FontAwesomeIcon className={cx('music-icon')} icon={faMusic} />
@@ -183,7 +225,7 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
                     <Tippy
                         zIndex={"9"}
                         interactive
-                        placement="top-start"
+                        placement="bottom-start"
                         delay={[0, 700]}
                         offset={[-26, 8]}
                         onHide={() => {

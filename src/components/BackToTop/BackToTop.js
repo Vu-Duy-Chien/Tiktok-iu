@@ -1,21 +1,29 @@
 import classNames from "classnames/bind";
 import styles from './BackToTop.module.scss'
 import { BackToTopIcon } from "../Icons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { actions, useStore } from "~/store";
 
 const cx = classNames.bind(styles)
 
 
 function BackToTop() {
+    const [state, dispatch] = useStore()
+    const [backBtn, setBackBtn] = useState(true)
 
-    const backtotopRef = useRef()
+
+
+    const handleShowGetapp = () => {
+        dispatch(actions.showGetapp())
+    }
 
     useEffect(() => {
+
         const onScroll = e => {
             if (window.pageYOffset < 100) {
-                backtotopRef.current.style.transform = 'translateY(40px)'
+                setBackBtn(true)
             } else {
-                backtotopRef.current.style.transform = 'none'
+                setBackBtn(false)
             }
         }
         window.addEventListener("scroll", onScroll)
@@ -24,8 +32,8 @@ function BackToTop() {
     }, [])
 
 
-    return <div className={cx('wrapper')} ref={backtotopRef}>
-        <div className={cx('get-app')}>Get app</div>
+    return <div className={cx('wrapper', { 'active': backBtn })}>
+        <div className={cx('get-app')} onClick={handleShowGetapp}>Get app</div>
         <button className={cx('backtotop')} onClick={() => {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         }}>

@@ -1,14 +1,30 @@
-import { SHOW_MODAL, HIDE_MODAL, LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_FOLLOW, UPDATE_LIKED } from "./constance";
+import { SHOW_MODAL, HIDE_MODAL, LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_FOLLOW, UPDATE_LIKED, SHOW_GETAPP, HIDE_GETAPP } from "./constance";
+
+const userLogin = JSON.parse(localStorage.getItem('userLogin'))
+let currentUser = {
+    status: false,
+    id: null,
+    liked: [],
+    follow: []
+}
+
+if (userLogin) {
+    const listUser = JSON.parse(localStorage.getItem("listUsers"))
+    const [keepLoginUser] = listUser.filter(item => item.id == userLogin.id)
+    currentUser = {
+        status: true,
+        id: keepLoginUser.id,
+        liked: keepLoginUser.liked,
+        follow: keepLoginUser.follow
+    }
+}
 
 
 export const initState = {
+    darkMode: false,
+    getapp: false,
     authen: false,
-    currentUser: {
-        status: false,
-        id: null,
-        liked: [],
-        follow: []
-    }
+    currentUser: currentUser
 }
 
 
@@ -59,6 +75,16 @@ function reducer(state, action) {
                     ...state.currentUser,
                     liked: [...action.payload]
                 }
+            }
+        case SHOW_GETAPP:
+            return {
+                ...state,
+                getapp: true
+            }
+        case HIDE_GETAPP:
+            return {
+                ...state,
+                getapp: false
             }
         default:
             throw new Error('Invalid action!')

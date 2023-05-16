@@ -26,6 +26,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     const handleLogout = e => {
         if (e.target.innerText === 'Log out') {
             dispatch(actions.logoutSuccess())
+            localStorage.removeItem('userLogin')
         }
     }
 

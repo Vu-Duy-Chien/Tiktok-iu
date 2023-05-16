@@ -21,6 +21,7 @@ function Authen() {
     const [disabledButton, setDisableButton] = useState(true)
     const [enterText, setEnterText] = useState(true)
     const [errorMessage, setErrorMessage] = useState(false)
+    const [incorrect, setIncorrect] = useState(false)
 
     const modalRef = useRef()
     const passwordRef = useRef()
@@ -102,9 +103,9 @@ function Authen() {
                             liked: []
                         }]
                         listUsersLocal = JSON.stringify(listUsersLocal)
+
                         localStorage.setItem("listUsers", listUsersLocal);
                         setErrorMessage(false)
-                        alert('Sign Up Success')
                         setSignupOrLogin(true)
                         setDisableButton(true)
 
@@ -122,7 +123,6 @@ function Authen() {
                 ]
                     `);
                     setErrorMessage(false)
-                    alert('Sign Up Success')
                     setSignupOrLogin(true)
                     setDisableButton(true)
                 }
@@ -135,13 +135,13 @@ function Authen() {
                     if (checkAccount) {
                         const [dataUser] = listUsersLocal.filter(user => user.username === usernameValue)
 
+                        localStorage.setItem('userLogin', JSON.stringify(dataUser))
                         dispatch(actions.loginSuccess(dataUser))
                         dispatch(actions.hideModal())
                         setDisableButton(true)
-
+                        setIncorrect(false)
                     } else {
-
-                        alert('incorrect account')
+                        setIncorrect(true)
                         setDisableButton(true)
                     }
                 }
@@ -178,8 +178,8 @@ function Authen() {
 
                                 </div>
                             </div>
-                            {errorMessage && <p className={cx('error-message')}>The account is already in use</p>}
-
+                            {!signupOrLogin && errorMessage && <p className={cx('error-message')}>The account is already in use</p>}
+                            {signupOrLogin && incorrect && <p className={cx('error-message')}>incorrect account</p>}
                             <Link to={'/'} className={cx('link-text')}>Forgot password?</Link>
                             <Button onClick={handleLogin} disabled={disabledButton} type="submit" className={cx('login-btn')}>{signupOrLogin ? 'Log in' : 'Sign up'}</Button>
                         </form>

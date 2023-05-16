@@ -4,6 +4,7 @@ import { publicRoutes } from '~/routes';
 import DefaultLayout from '~/layouts';
 import Authen from './components/Authen/Authen';
 import BackToTop from './components/BackToTop/BackToTop';
+import Getapp from './components/Getapp/Getapp';
 
 
 const visibilityChange = () => {
@@ -54,6 +55,7 @@ function App() {
             </div>
             <Authen />
             <BackToTop />
+            <Getapp />
         </Router>
     );
 }

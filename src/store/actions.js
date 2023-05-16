@@ -1,4 +1,4 @@
-import { SHOW_MODAL, HIDE_MODAL, LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_FOLLOW } from "./constance";
+import { SHOW_MODAL, HIDE_MODAL, LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_FOLLOW, UPDATE_LIKED, SHOW_GETAPP, HIDE_GETAPP } from "./constance";
 
 
 export const showModal = payload => ({
@@ -29,6 +29,14 @@ export const updateFollow = payload => ({
 })
 
 export const updateLiked = payload => ({
-    type: UPDATE_FOLLOW,
+    type: UPDATE_LIKED,
+    payload
+})
+export const showGetapp = payload => ({
+    type: SHOW_GETAPP,
+    payload
+})
+export const hideGetapp = payload => ({
+    type: HIDE_GETAPP,
     payload
 })

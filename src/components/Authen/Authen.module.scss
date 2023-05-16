@@ -82,7 +82,7 @@
 }
 
 .login-title {
-    color: rgb(22, 24, 35);
+    color: var(--text-color);
     font-family: SofiaPro, sans-serif;
     font-size: 32px;
     margin: 16px auto;
@@ -92,7 +92,7 @@
 }
 
 .description {
-    color: rgb(22, 24, 35);
+    color: var(--text-color);
     font-weight: 600;
     font-size: 15px;
     display: flex;
@@ -115,7 +115,7 @@
     background-color: rgba(22, 24, 35, 0.06);
     border: 1px solid rgba(22, 24, 35, 0.12);
     padding-inline-start: 12px;
-    color: rgb(22, 24, 35);
+    color: var(--text-color);
     line-height: 100%;
     outline: none;
     font-size: 16px;
@@ -136,7 +136,7 @@
     background-color: rgba(22, 24, 35, 0.06);
     border: 1px solid rgba(22, 24, 35, 0.12);
     padding-inline: 12px 24px;
-    color: rgb(22, 24, 35);
+    color: var(--text-color);
     line-height: 100%;
     outline: none;
     font-size: 16px;
@@ -188,7 +188,7 @@
 }
 
 .modal-footer {
-    color: rgb(22, 24, 35);
+    color: var(--text-color);
     font-family: ProximaNova, sans-serif;
     height: 64px;
     border-top: 1px solid rgba(22, 24, 35, 0.12);

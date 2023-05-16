@@ -1,0 +1,218 @@
+.wrapper {
+    margin-right: 18px;
+    width: 226px;
+    height: 302px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    display: block;
+    float: left;
+    overflow: hidden;
+}
+
+.user-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgba(22, 24, 35, 0.06);
+}
+
+.video-container {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content-container {
+    position: absolute;
+    background: transparent;
+    bottom: 0px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    box-sizing: border-box;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 12px 20px;
+    text-align: center;
+}
+
+.image-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.span-avatar-container {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    font-feature-settings: 'tnum';
+    position: relative;
+    overflow: hidden;
+    color: rgb(255, 255, 255);
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 32px;
+    border-radius: 50%;
+    background-color: rgba(136, 136, 136, 0.5);
+    margin-bottom: 14px;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-title {
+    color: rgb(255, 255, 255);
+    font-family: ProximaNova, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    width: 100%;
+    margin: 0px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-subtitle {
+    max-width: 100%;
+    margin: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    overflow: hidden;
+
+    span {
+        color: rgb(255, 255, 255);
+        font-family: ProximaNova, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        max-width: 180px;
+        margin: 0px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .blue-tick {
+        margin-left: 4px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        flex-shrink: 0;
+    }
+}
+
+.button-container {
+    margin-top: 8px;
+}
+
+.follow-btn {
+    border-radius: 4px;
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(254, 44, 85);
+    min-width: 164px;
+    min-height: 36px;
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 600;
+    font-family: SofiaPro, sans-serif;
+    display: flex;
+    position: relative;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 6px 8px;
+    user-select: none;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)), rgb(254, 44, 85);
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.following-btn {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    color: var(--text-color);
+    border-color: rgba(22, 24, 35, 0.12);
+    background-color: rgb(255, 255, 255);
+    min-width: 164px;
+    min-height: 36px;
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 600;
+    font-family: SofiaPro, sans-serif;
+    display: flex;
+    position: relative;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 6px 8px;
+    user-select: none;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover {
+        border-color: rgb(208, 209, 211);
+        background-color: rgb(248, 248, 248);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:active {
+        border-color: rgb(208, 209, 211);
+        background-color: rgb(241, 241, 242);
+    }
+}
+
+.blue-tick {
+    .blue-tick-icon {
+        color: #20d5ec;
+        height: 12px;
+    }
+}

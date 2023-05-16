@@ -32,8 +32,78 @@
     width: 510px;
 }
 
-.Author {
+// profile
+
+.profileInner {
+    padding: 20px;
+    width: 320px;
+    overflow: visible;
+
+    .profile-name {
+        color: var(--text-color);
+        font-family: ProximaNova, Arial, Tahoma, PingFangSC, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .follow-like {
+        margin-top: 8px;
+    }
+
+    .number {
+        font-weight: 700;
+        margin-right: 6px;
+        font-size: 17px;
+        line-height: 20px;
+        display: inline-block;
+    }
+
+    .profile-text {
+        margin-right: 12px;
+        color: rgba(22, 24, 35, 0.75);
+        font-size: 17px;
+        line-height: 20px;
+        display: inline-block;
+    }
+
+    .profile-bio {
+        font-size: 14px;
+        line-height: 20px;
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid rgba(22, 24, 35, 0.12);
+    }
+}
+
+.profile-header {
     display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    .profile-avatar {
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        cursor: pointer;
+    }
+
+    .follow-big {
+        min-width: 106px;
+        min-height: 35.6px;
+    }
+}
+
+.Author {
+    display: inline-flex;
+
+    &:hover .nickname {
+        text-decoration: underline;
+    }
 }
 
 .nickname {
@@ -42,6 +112,11 @@
     line-height: 2.5rem;
     display: inline-block;
     margin-right: 4px;
+    cursor: pointer;
+
+    &:active {
+        color: var(--text-color);
+    }
 }
 
 .name {
@@ -49,17 +124,64 @@
     font-size: 1.4rem;
     display: inline-block;
     line-height: 2.8rem;
+    cursor: pointer;
 }
 
 .follow-btn {
+    min-height: 28px;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+    font-family: ProximaNova, sans-serif;
+    border-width: 1px;
+    border-style: solid;
+    user-select: none;
+    min-width: 88px;
+    min-height: 28px;
+    padding: 0px 10px;
+    background-color: rgb(255, 255, 255);
+
+    &:active {
+        background-color: rgba(254, 44, 85, 0.16);
+    }
+}
+
+.follow-small {
+    right: 0;
     position: absolute;
     top: 2.8rem;
-    right: 3rem;
+}
+
+.follow-active {
+    color: var(--text-color);
+    border-color: rgba(22, 24, 35, 0.12);
+
+    &:hover {
+        border-color: rgb(208, 209, 211);
+        background-color: rgb(248, 248, 248);
+    }
+
+    &:active {
+        border-color: rgb(208, 209, 211);
+        background-color: rgb(241, 241, 242);
+    }
 }
 
 .description {
     font-size: 1.6rem;
     line-height: 2.2rem;
+}
+
+.common-link {
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 22px;
+    word-break: break-word;
+    font-weight: 600;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .music {
@@ -68,12 +190,15 @@
     line-height: 2.2rem;
     margin-top: 4px;
     margin-bottom: 12px;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .music-icon {
     margin-right: 5px;
 }
-
 //video
 .video-wrapper {
     display: flex;

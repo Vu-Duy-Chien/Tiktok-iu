@@ -123,6 +123,7 @@ function Sidebar() {
     const deBouncedValue = useDebounce(userID, 200);
 
     const handleShowPreview = e => {
+
         setPreview(true)
 
         if (e.target.tagName === 'DIV' && e.target.getAttribute("iduser")) {
