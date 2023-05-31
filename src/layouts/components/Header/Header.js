@@ -13,15 +13,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import HeadlessTippy from '@tippyjs/react/headless';
+
 
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
-import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
+import { UploadIcon, MessageIcon, InboxIcon, InboxIconActive } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
 import { useStore, actions } from '~/store';
+import Inbox from './Inbox/Inbox';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const cx = classNames.bind(styles);
@@ -110,6 +115,17 @@ function Header() {
         }
     }
 
+    const [notify, setNotify] = useState(false)
+
+    const handleShowNotifications = () => {
+        setNotify(!notify)
+    }
+
+    const handleHideNotify = () => {
+        setNotify(false)
+    }
+
+
 
 
     return (
@@ -125,9 +141,9 @@ function Header() {
                     {currentUser ? (
                         <>
                             <Tippy delay={[0, 50]} content="Upload video" placement="bottom">
-                                <button className={cx('action-btn')}>
+                                <Link to='/upload' className={cx('action-btn')}>
                                     <UploadIcon />
-                                </button>
+                                </Link>
                             </Tippy>
                             <Tippy delay={[0, 50]} content="Messages" placement="bottom">
                                 <button className={cx('action-btn')}>
@@ -135,12 +151,31 @@ function Header() {
                                 </button>
                             </Tippy>
 
-                            <Tippy delay={[0, 50]} content="Upload video" placement="bottom">
-                                <button className={cx('action-btn')}>
-                                    <InboxIcon />
-                                    <span className={cx('badge')}>12</span>
-                                </button>
-                            </Tippy>
+                            <div>
+                                <HeadlessTippy
+                                    interactive
+                                    visible={notify}
+                                    placement="top-start"
+                                    offset={[51, 1]}
+                                    render={(attrs) => (
+                                        <div tabIndex="-1" {...attrs}>
+                                            <Inbox />
+                                        </div>
+                                    )}
+                                    onClickOutside={handleHideNotify}
+                                >
+                                    {notify ?
+                                        <button className={cx('action-btn')} onClick={handleShowNotifications}>
+                                            <InboxIconActive />
+                                        </button>
+                                        : <Tippy delay={[0, 50]} content="Inbox" placement="bottom">
+                                            <button className={cx('action-btn')} onClick={handleShowNotifications}>
+                                                <InboxIcon />
+                                            </button>
+                                        </Tippy>}
+
+                                </HeadlessTippy>
+                            </div>
                         </>
                     ) : (
                         <>

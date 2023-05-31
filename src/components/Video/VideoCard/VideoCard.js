@@ -1,34 +1,37 @@
 import classNames from "classnames/bind";
 import styles from '../Video.module.scss'
 import { useEffect, useRef, useState } from "react";
-import { useElementOnScreen } from "~/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlagCheckered, faPause, faPlay, faVolumeHigh, faVolumeTimes } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useStore, actions } from "~/store";
 
 const cx = classNames.bind(styles)
 
 
 
-function VideoCard({ src, onchange, volumeValue, setVolume, setOldVolume, oldVolume }) {
+function VideoCard({ dataVid, src, onchange, volumeValue, setVolume, setOldVolume, oldVolume }) {
 
     const volumeVal = volumeValue / 100
 
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(true);
     const [sound, setSound] = useState(true)
 
 
     const videoRef = useRef();
     const inputRef = useRef()
-    if (videoRef.current) {
-        videoRef.current.onplay = () => {
-            setPlaying(true)
-        }
 
-        videoRef.current.onpause = () => {
-            setPlaying(false)
-        }
-    }
 
+    useEffect(() => {
+        const visibilityChange = () => {
+            if (document.hidden) {
+                videoRef.current.pause()
+
+            }
+        }
+        document.addEventListener("visibilitychange", visibilityChange);
+        return () => { document.removeEventListener("visibilitychange", visibilityChange) }
+    }, [])
 
     const handlePlayPause = () => {
         if (playing) {
@@ -39,29 +42,7 @@ function VideoCard({ src, onchange, volumeValue, setVolume, setOldVolume, oldVol
             setPlaying(true);
         }
     };
-    const options = {
-        root: null,
-        rootMargin: "-20%",
-        threshold: 0.4,
-    };
-    const isVisibile = useElementOnScreen(options, videoRef);
 
-    useEffect(() => {
-
-        if (isVisibile) {
-            if (!playing) {
-                videoRef.current.play();
-                videoRef.current.volume = volumeVal
-                inputRef.current.style.backgroundSize = volumeValue + '% 100%'
-                setPlaying(true);
-            }
-        } else {
-            if (playing) {
-                videoRef.current.pause();
-                setPlaying(false);
-            }
-        }
-    }, [isVisibile]);
 
 
 
@@ -90,12 +71,28 @@ function VideoCard({ src, onchange, volumeValue, setVolume, setOldVolume, oldVol
         }
     }, [volumeValue])
 
+    const navigate = useNavigate();
+    const [state, dispatch] = useStore()
+
+    const handleGoToComments = e => {
+        dispatch(actions.commentsTemporary())
+        navigate(`/@${dataVid.user.nickName}/video/${dataVid.id}`)
+    }
 
 
 
-    return <div className={cx('card-container')}>
-        <video className={cx('video')} src={src} loop ref={videoRef}
+
+    return <div className={cx('card-container')} >
+
+
+
+        <video onPlay={() => {
+            setPlaying(true)
+        }} onPause={() => setPlaying(false)} onClick={handleGoToComments} className={cx('video')} src={src} autoPlay loop ref={videoRef}
         />
+
+
+
         <p className={cx('report')}>
             <FontAwesomeIcon icon={faFlagCheckered} className={cx('flag-icon')} />
             Report

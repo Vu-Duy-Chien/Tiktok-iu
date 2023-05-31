@@ -1,0 +1,97 @@
+// Inbox
+
+.inbox-wrapper {
+    display: block;
+    position: absolute;
+    width: 376px;
+    height: 640px;
+    top: 50px;
+    background: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px -4px 32px;
+    transition: all 200ms linear 0s;
+    z-index: 1000;
+    opacity: 1;
+    right: -50px;
+}
+
+.inbox-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inbox-header-container {
+    padding-top: 24px;
+    flex: 0 0 auto;
+    padding-left: 16px;
+}
+
+.inbox-title {
+    color: var(--text-color);
+    font-family: SofiaPro, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+}
+
+.inbox-bar {
+    color: var(--text-color);
+    margin-top: 16px;
+    display: flex;
+    flex-flow: row wrap;
+
+    .inbox-bar-btn-active {
+        color: rgb(255, 255, 255);
+        background: var(--text-color);
+    }
+}
+
+.inbox-bar-btn:not(:last-child) {
+    margin-right: 8px;
+}
+
+.inbox-bar-btn {
+    color: var(--text-color);
+    background: rgba(22, 24, 35, 0.06);
+    border: none;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-family: ProximaNova, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 300ms ease 0s;
+}
+
+.inbox-list {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+.inbox-list-default {
+    padding: 88px 32px 0px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.inbox-default-title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    margin-top: 20px;
+}
+
+.inbox-default-desc {
+    color: rgba(22, 24, 35, 0.75);
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 12px;
+    text-align: center;
+}

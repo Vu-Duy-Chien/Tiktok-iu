@@ -16,7 +16,7 @@ function Following() {
     }
 
     return <div className={cx('wrapper')}>
-        {dataVideos.map(video => <FollowCard data={video} idVideo={idVideoRunning} onMouseEnter={handleChangeVideoRun} />)}
+        {dataVideos.map(video => <FollowCard key={video.id} data={video} idVideo={idVideoRunning} onMouseEnter={handleChangeVideoRun} />)}
 
     </div>
 }

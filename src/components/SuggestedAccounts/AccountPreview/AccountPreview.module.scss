@@ -1,13 +1,13 @@
 .container {
     position: absolute;
-    left: 427px;
+    left: 409px;
     padding-left: 20px;
     z-index: 100;
 }
 
 @media only screen and (max-width: 1024px) {
     .container {
-        left: 66px;
+        left: 48px;
     }
 }
 

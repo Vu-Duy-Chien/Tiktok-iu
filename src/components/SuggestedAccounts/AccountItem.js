@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './SuggestedAccounts.module.scss';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -12,11 +13,13 @@ function AccountItem({ onMouseenter = () => { }, data, onMouseleave = () => { } 
     return (
 
         <div className={cx('account-item')} onMouseLeave={onMouseleave} onMouseEnter={onMouseenter} iduser={data.id}>
-            <img
-                className={cx('avatar')}
-                src={data.avatar}
-                alt={data.nickName}
-            />
+            <Link to={`/@${data.nickName}`}>
+                <img
+                    className={cx('avatar')}
+                    src={data.avatar}
+                    alt={data.nickName}
+                />
+            </Link>
             <div className={cx('item-info')} iduser={data.id}>
                 <p className={cx('nickname')}>
                     <span className={cx('nickname-text')}>{data.nickName}</span>

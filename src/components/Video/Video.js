@@ -7,21 +7,23 @@ import { faCommentDots, faHeart, faMusic, faShare } from "@fortawesome/free-soli
 import Tippy from "@tippyjs/react/headless";
 import ShareVideo from "../ShareVideo/ShareVideo";
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import VideoCard from "./VideoCard/VideoCard";
 import { useStore, actions } from '~/store';
+import { useElementOnScreen } from "~/hooks";
 
 
 
 const cx = classNames.bind(styles)
 
 
-function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume, idvideo }) {
+function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume }) {
 
 
     const [hideListShare, setHideListShare] = useState(true)
     const [like, setLike] = useState()
     const [follow, setFollow] = useState()
+    const [mountVideo, setMountVideo] = useState(false)
 
 
 
@@ -161,7 +163,26 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
         </PopperWrapper>
     </div>
 
-    return <div className={cx('item-container')} key={data.id} id={idvideo}>
+    const videoRef = useRef()
+
+    const options = {
+        root: null,
+        rootMargin: "-20%",
+        threshold: 0.3,
+    };
+    const isVisibile = useElementOnScreen(options, videoRef);
+
+    useEffect(() => {
+        if (isVisibile) {
+            setMountVideo(true)
+            dispatch(actions.updateVideoInview(data.id, data.user.nickName))
+        } else {
+            setMountVideo(false)
+        }
+
+    }, [isVisibile]);
+
+    return <div className={cx('item-container')} key={data.id} id={`vidhome${data.id}`}>
         <img
             className={cx('avatar')}
             src={data.user.avatar} alt=""
@@ -193,14 +214,22 @@ function Video({ data, onchange, volumeValue, setVolume, setOldVolume, oldVolume
                 </h4>
             </div>
             <div className={cx('video-wrapper')}>
-                <VideoCard
-                    src={data.src}
-                    onchange={onchange}
-                    volumeValue={volumeValue}
-                    setVolume={setVolume}
-                    setOldVolume={setOldVolume}
-                    oldVolume={oldVolume}
-                />
+
+
+                <div className={cx('screen-container')} ref={videoRef}>
+                    {!state.keepLayoutComments && mountVideo ? <VideoCard
+                        dataVid={data}
+                        src={data.src}
+                        onchange={onchange}
+                        volumeValue={volumeValue}
+                        setVolume={setVolume}
+                        setOldVolume={setOldVolume}
+                        oldVolume={oldVolume}
+                    /> : <img src={data.imageVideo} alt="" />}
+
+
+
+                </div>
 
 
                 <div className={cx('action-item-container')}>

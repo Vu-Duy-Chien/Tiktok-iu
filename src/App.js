@@ -7,17 +7,6 @@ import BackToTop from './components/BackToTop/BackToTop';
 import Getapp from './components/Getapp/Getapp';
 
 
-const visibilityChange = () => {
-    if (document.hidden) {
-        const videoStatus = document.querySelectorAll('video')
-        videoStatus.forEach(video => {
-            video.pause()
-        })
-
-    }
-}
-
-document.addEventListener("visibilitychange", visibilityChange);
 
 
 
@@ -28,7 +17,7 @@ function App() {
     }, []);
     return (
         <Router>
-            <div className="App">
+            <div className="App" data-theme='light'>
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         const Page = route.component;
@@ -44,9 +33,11 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
+
                                     <Layout>
                                         <Page />
                                     </Layout>
+
                                 }
                             />
                         );

@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from './BackToTop.module.scss'
 import { BackToTopIcon } from "../Icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { actions, useStore } from "~/store";
 
 const cx = classNames.bind(styles)
@@ -30,7 +30,6 @@ function BackToTop() {
 
         return () => window.addEventListener("scroll", onScroll)
     }, [])
-
 
     return <div className={cx('wrapper', { 'active': backBtn })}>
         <div className={cx('get-app')} onClick={handleShowGetapp}>Get app</div>

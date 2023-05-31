@@ -1,4 +1,4 @@
-import { SHOW_MODAL, HIDE_MODAL, LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_FOLLOW, UPDATE_LIKED, SHOW_GETAPP, HIDE_GETAPP } from "./constance";
+import { VIDEO_INVIEW, KEEP_LAYOUT_COMMENTS, UN_KEEP_LAYOUT_COMMENTS, LAYOUT_COMMENTS_TEMPORARY, LAYOUT_COMMENTS_DEFAULT, SHOW_MODAL, HIDE_MODAL, LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_FOLLOW, UPDATE_LIKED, SHOW_GETAPP, HIDE_GETAPP } from "./constance";
 
 const userLogin = JSON.parse(localStorage.getItem('userLogin'))
 let currentUser = {
@@ -21,6 +21,10 @@ if (userLogin) {
 
 
 export const initState = {
+    authorInview: 'slavikjunge.ma4',
+    videoInview: 1,
+    layoutCommentDefault: true,
+    keepLayoutComments: false,
     darkMode: false,
     getapp: false,
     authen: false,
@@ -85,6 +89,33 @@ function reducer(state, action) {
             return {
                 ...state,
                 getapp: false
+            }
+        case LAYOUT_COMMENTS_DEFAULT:
+            return {
+                ...state,
+                layoutCommentDefault: true
+            }
+        case LAYOUT_COMMENTS_TEMPORARY:
+            return {
+                ...state,
+                layoutCommentDefault: false
+            }
+        case KEEP_LAYOUT_COMMENTS:
+            return {
+                ...state,
+                keepLayoutComments: true
+            }
+        case UN_KEEP_LAYOUT_COMMENTS:
+
+            return {
+                ...state,
+                keepLayoutComments: false
+            }
+        case VIDEO_INVIEW:
+            return {
+                ...state,
+                videoInview: action.payload,
+                authorInview: action.payload2
             }
         default:
             throw new Error('Invalid action!')

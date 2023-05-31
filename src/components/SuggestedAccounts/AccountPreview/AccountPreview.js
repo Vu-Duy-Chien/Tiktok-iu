@@ -15,7 +15,7 @@ function AccountPreview({ data, style, onMouseleave = () => { }, onMouseenter = 
                 <div className={cx('header')}>
                     <img
                         className={cx('avatar')}
-                        src={data.avatar} alt={data.nickName}
+                        src={data.avatar && data.avatar} alt={data.nickName}
                     />
                     <Button className={cx('follow-btn')} primary>
                         Follow
