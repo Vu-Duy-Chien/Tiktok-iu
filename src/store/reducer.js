@@ -21,8 +21,8 @@ if (userLogin) {
 
 
 export const initState = {
-    authorInview: 'slavikjunge.ma4',
-    videoInview: 1,
+    authorInview: '',
+    videoInview: '',
     layoutCommentDefault: true,
     keepLayoutComments: false,
     darkMode: false,
